@@ -1,7 +1,31 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Home</h1>
-{% if current_user.is_authenticated %}
-<p>Hi {{ current_user.username }} !</p>
-{% endif %}
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Welcome to MangaPy
+            </h1>
+            <h2 class="subtitle">
+                Reading manga made fun.
+            </h2>
+        </div>
+    </div>
+</section>
+<nav class="level is-mobile">
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Users</p>
+            <p class="title">3,456</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Manga</p>
+            <p class="title">123</p>
+        </div>
+    </div>
+
+
+</nav>
 {% endblock %}
