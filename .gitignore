@@ -1,0 +1,4 @@
+migrations/
+.vscode/
+Pipfile
+Pipfile.lock
