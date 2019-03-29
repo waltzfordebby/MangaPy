@@ -36,6 +36,15 @@ class MangaPanda(object):
             manga_home_html = BeautifulSoup(manga_html, 'lxml')
             yield manga_home_html.find(id="mangaimg").find("img").get("src")
 
+    def get_manga_genre(self, manga_html_list):
+        genre_list = []
+        for manga_html in manga_html_list:
+            manga_home_html = BeautifulSoup(manga_html, 'lxml')
+            for genre in manga_home_html.find(id="mangaproperties").find_all(class_="genretags"):
+                if genre.text not in genre_list:
+                    genre_list.append(genre.text)
+            yield genre_list
+
     def get_hot_manga_chapter(self):
         for manga in self._latest_hot_manga_html:
             yield manga.find("h3").find("a").text
@@ -53,6 +62,11 @@ class MangaPanda(object):
         for manga in self._popular_manga_html:
             yield f'{manga.find("a").text}'
 
+    def get_popular_manga_summary(self, manga_html_list):
+        for manga_html in manga_html_list:
+            manga_home_html = BeautifulSoup(manga_html, 'lxml')
+            yield f'{manga_home_html.find(id="readmangasum").find("p").text}'
+
     def get_hot_manga_data(self):
         chapters = self.get_hot_manga_chapter()
         url_list = self.get_hot_manga_url()
@@ -67,9 +81,12 @@ class MangaPanda(object):
         manga_html_list = self.get_manga_html(url_list)
         manga_title_list = self.get_popular_manga_title()
         manga_cover_list = self.get_manga_cover_url(manga_html_list)
+        manga_summary_list = self.get_popular_manga_summary(manga_html_list)
+        manga_genre_list = self.get_manga_genre(manga_html_list)
 
-        for title, url in zip(manga_title_list, manga_cover_list):
-            yield {'title': title, 'cover_url': url}
+        for title, url, summary, genre in zip(manga_title_list, manga_cover_list, manga_summary_list, manga_genre_list):
+            yield {'title': title, 'cover_url': url,
+                   'summary': summary, 'genre': genre}
 
 
 def hot_manga_data():
@@ -83,3 +100,5 @@ def popular_manga_data():
 
 
 # test()
+
+# popular_manga_data()

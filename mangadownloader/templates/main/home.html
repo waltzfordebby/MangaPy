@@ -159,17 +159,14 @@
                     <div class="content is-small">
                         <strong class="title is-size-5">{{ manga.title }}</strong>
                         <p class="top-1"><strong class="has-text-info">Latest Chapter: 800</strong></p>
-                        <p class="has-text-grey top-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Proin
-                            ornare
-                            magna eros, eu
-                            pellentesque
-                            tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                        <p class="has-text-grey top-1">{{ manga.summary }}
                         </p>
                         <div class="tags">
-                            <span class="tag">One</span>
-                            <span class="tag">Two</span>
-                            <span class="tag">Three</span>
+                            {% for genre in manga.genre %}
+                            <span class="tag">{{ genre }}</span>
+                            <!-- <span class="tag">Two</span>
+                            <span class="tag">Three</span> -->
+                            {% endfor %}
                         </div>
                     </div>
             </article>
