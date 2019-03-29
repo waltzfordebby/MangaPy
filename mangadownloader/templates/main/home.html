@@ -18,7 +18,7 @@
     <div class="column is-9">
         <h5 class="title is-5">Latest Update</h5>
         <div class="columns is-multiline">
-            {% for manga in hotmanga %}
+            {% for manga in hot_manga %}
             <div class="column is-3">
                 <div class="card">
                     <div class="card-image">
@@ -38,7 +38,7 @@
     </div>
     <div class="column  is-3 ">
         <h5 class="title is-5">Popular</h5>
-        <div class="box">
+        <!-- <div class="box">
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
@@ -119,9 +119,9 @@
                         </div>
                     </div>
             </article>
-        </div>
+        </div> -->
 
-        <div class="box">
+        <!-- <div class="box">
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
@@ -146,18 +146,18 @@
                         </div>
                     </div>
             </article>
-        </div>
-
+        </div> -->
+        {% for manga in popular_manga %}
         <div class="box">
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png">
+                        <img src="{{ manga.cover_url }}">
                     </p>
                 </figure>
                 <div class="media-content">
                     <div class="content is-small">
-                        <strong class="title is-size-5">Manga</strong>
+                        <strong class="title is-size-5">{{ manga.title }}</strong>
                         <p class="top-1"><strong class="has-text-info">Latest Chapter: 800</strong></p>
                         <p class="has-text-grey top-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Proin
@@ -174,6 +174,7 @@
                     </div>
             </article>
         </div>
+        {% endfor %}
     </div>
 </div>
 
