@@ -7,6 +7,21 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+# manga_genre = db.Table('manga_genre',
+#                        db.Column('manga_id', db.Integer, db.ForeignKey(
+#                            'manga.id'), primary_key=True)
+#                        db.Column('genre_id', db.Integer, db.ForeignKey(
+#                            'genre.id'), primary_key=True)
+#                        )
+
+manga_genre = db.Table('manga_genre',
+                       db.Column('manga_id', db.Integer, db.ForeignKey(
+                           'manga.id'), primary_key=True),
+                       db.Column('genre_id', db.Integer, db.ForeignKey(
+                           'genre.id'), primary_key=True)
+                       )
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -28,7 +43,8 @@ class Manga(db.Model):
     volumes = db.Column(db.Integer, nullable=False, default=0)
     chapters = db.Column(db.Integer, nullable=False, default=0)
     status = db.Column(db.String(20), nullable=False, default="Unknown")
-    # genre = db.relationship('Genre', backref='manga', lazy=True)
+    genres = db.relationship(
+        'Genre', secondary=manga_genre, lazy='subquery', backref=db.backref('mangas', lazy=True))
     author_id = db.Column(db.Integer, db.ForeignKey(
         'author.id'), nullable=False)
     artist_id = db.Column(db.Integer, db.ForeignKey(
@@ -76,3 +92,8 @@ class Artist(db.Model):
 
     def __repr__(self):
         return f"Author('{self.last_name}','{self.first_name}','{self.pen_name}')"
+
+
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True, nullable=False)

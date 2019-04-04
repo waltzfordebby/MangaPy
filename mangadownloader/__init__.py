@@ -22,6 +22,10 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
 
     from mangadownloader.models import User
+    from mangadownloader.models import Manga
+    from mangadownloader.models import Author
+    from mangadownloader.models import Artist
+    from mangadownloader.models import Genre
     from mangadownloader.main.routes import main
     from mangadownloader.users.routes import users
 
