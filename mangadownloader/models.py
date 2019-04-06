@@ -7,13 +7,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# manga_genre = db.Table('manga_genre',
-#                        db.Column('manga_id', db.Integer, db.ForeignKey(
-#                            'manga.id'), primary_key=True)
-#                        db.Column('genre_id', db.Integer, db.ForeignKey(
-#                            'genre.id'), primary_key=True)
-#                        )
-
 manga_genre = db.Table('manga_genre',
                        db.Column('manga_id', db.Integer, db.ForeignKey(
                            'manga.id'), primary_key=True),
@@ -36,6 +29,7 @@ class User(db.Model, UserMixin):
 
 class Manga(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(50), nullable=False, default="Unknown")
     title = db.Column(db.String(30), unique=True, nullable=False)
     japanese_title = db.Column(
         db.String(30), unique=True, nullable=False, default="Unknown")
@@ -50,6 +44,7 @@ class Manga(db.Model):
     artist_id = db.Column(db.Integer, db.ForeignKey(
         'artist.id'), nullable=False)
     serialization = db.Column(db.Text, nullable=False, default="Unknown")
+    summary = db.Column(db.Text, nullable=False, default="Unknown")
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     updated_on = db.Column(
         db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
@@ -61,13 +56,10 @@ class Manga(db.Model):
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     manga = db.relationship('Manga', backref="author", lazy=True)
+    image_url = db.Column(db.String(50), nullable=False, default="Unknown")
     last_name = db.Column(db.String(30), nullable=False, default="None")
     first_name = db.Column(db.String(30), nullable=False, default="None")
-    pen_name = db.Column(db.Text, nullable=False, default="Unknown")
     birth_date = db.Column(db.DateTime, nullable=False, default="Unknown")
-    birth_place = db.Column(db.Text, nullable=False, default="Unknown")
-    weight = db.Column(db.Integer, nullable=False, default="Unknown")
-    blood_type = db.Column(db.Integer, nullable=False, default="Unknown")
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     updated_on = db.Column(
         db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
@@ -79,13 +71,10 @@ class Author(db.Model):
 class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     manga = db.relationship('Manga', backref="artist", lazy=True)
+    image_url = db.Column(db.String(50), nullable=False, default="Unknown")
     last_name = db.Column(db.String(30), nullable=False, default="None")
     first_name = db.Column(db.String(30), nullable=False, default="None")
-    pen_name = db.Column(db.Text, nullable=False, default="Unknown")
-    birth_date = db.Column(db.DateTime, nullable=False, default="Unknown")
-    birth_place = db.Column(db.Text, nullable=False, default="Unknown")
-    weight = db.Column(db.Integer, nullable=False, default="Unknown")
-    blood_type = db.Column(db.Integer, nullable=False, default="Unknown")
+    birth_day = db.Column(db.DateTime, nullable=False, default="Unknown")
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     updated_on = db.Column(
         db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
